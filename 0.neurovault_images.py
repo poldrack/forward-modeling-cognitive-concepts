@@ -24,10 +24,14 @@ import shutil
 import sys
 
 if sys.version_info < (3, 0):
-    from exceptions import ValueError
+    from exceptions import ValueError,NameError
 
 # Get the base and present working directory
-base = get_base()
+try:
+    base
+except NameError:
+    base = get_base()
+
 here = get_pwd()
 
 data_directory = os.path.abspath("%s/data" %(base))
