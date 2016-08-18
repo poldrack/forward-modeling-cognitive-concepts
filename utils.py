@@ -29,9 +29,10 @@ def get_base():
 
 def get_pwd():
     '''get_pwd gets the present working directory of the scripts'''
-    if __IPYTHON__:
+    try:
+        __IPYTHON__
         return os.getcwd()
-    else:
+    except:
         return os.path.dirname(os.path.abspath(__file__))
 
 
