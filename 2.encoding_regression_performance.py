@@ -61,7 +61,7 @@ result = dict()
 concepts = X.columns.tolist()
 
 # We will go through each voxel (column) in a data frame of image data
-image_paths = lookup.values()
+image_paths = list(lookup.values())
 mr = get_images_df(file_paths=image_paths,mask=standard_mask)
 image_ids = [int(os.path.basename(x).split(".")[0]) for x in image_paths]
 mr.index = image_ids
@@ -87,7 +87,7 @@ holdout2Y = X.loc[image2_holdout,:]
 regression_params = pandas.DataFrame(0,index=norm.columns,columns=concepts)
 intercept_params = pandas.DataFrame(0,index=norm.columns,columns=["intercept"])
 
-print "Training voxels..."
+print("Training voxels...")
 for voxel in norm.columns:
     train = [x for x in X.index if x not in [image1_holdout,image2_holdout] and x in norm.index]
     Y = norm.loc[train,voxel].tolist()
@@ -98,7 +98,7 @@ for voxel in norm.columns:
     regression_params.loc[voxel,:] = clf.coef_.tolist()
     intercept_params.loc[voxel,"intercept"] = clf.intercept_    
 
-print "Making predictions..."
+print("Making predictions...")
 # Use regression parameters to generate predicted images
 # data * .coef_ + intercept_
 concept_vector1 =  pandas.DataFrame(holdout1Y)
